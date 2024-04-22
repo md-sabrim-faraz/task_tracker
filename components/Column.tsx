@@ -1,14 +1,7 @@
-import React from "react";
+"use client";
+import React, { useMemo } from "react";
 import Task from "./Task";
-
-const tasks = [
-  {
-    id: "1",
-    title: "First Task",
-    description: "Some Description",
-    status: "DONE",
-  },
-];
+import { useTaskStore } from "@/lib/store";
 
 export default function Column({
   title,
@@ -17,7 +10,16 @@ export default function Column({
   title: string;
   status: string;
 }) {
-  const filteredTasks = tasks.filter((task) => task.status === status);
+  // get tasks from store
+
+  const tasks = useTaskStore((state) => state.tasks);
+
+  console.log(tasks);
+
+  const filteredTasks = useMemo(
+    () => tasks.filter((task) => task.status === status),
+    [tasks, status]
+  );
 
   console.log(filteredTasks);
 

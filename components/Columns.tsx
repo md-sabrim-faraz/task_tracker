@@ -1,9 +1,12 @@
 import React from "react";
 import Column from "./Column";
+import NewTodoDialog from "./NewTodoDialog";
 
 export default function Columns() {
   return (
     <>
+      <NewTodoDialog />
+
       <section className="mt-10 flex gap-6 lg:gap-12">
         <Column title="Todo" status="TODO" />
         <Column title="In Progress" status="IN_PROGRESS" />

@@ -12,7 +12,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "./ui/textarea";
+import { useTaskStore } from "@/lib/store";
+
 export default function NewTodoDialog() {
+  const addTask = useTaskStore((state) => state.addTask);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -20,7 +24,19 @@ export default function NewTodoDialog() {
 
     const formData = new FormData(form);
 
-    console.log(Object.fromEntries(formData));
+    const { title, description } = Object.fromEntries(formData);
+
+    console.log(title);
+    console.log(description);
+
+    if (
+      typeof title !== "string" ||
+      title === "" ||
+      typeof description !== "string"
+    )
+      return;
+
+    addTask(title, description);
   };
 
   return (

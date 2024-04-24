@@ -21,8 +21,6 @@ export default function Column({
     [tasks, status]
   );
 
-  console.log(filteredTasks);
-
   return (
     <section className="h-[600px] flex-1">
       <h2 className="ml-1 font-serif text-2xl font-semibold">{title}</h2>

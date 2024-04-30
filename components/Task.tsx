@@ -1,3 +1,4 @@
+import { useTaskStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import React from "react";
 
@@ -12,18 +13,29 @@ export default function Task({
   description?: string;
   status: string;
 }) {
+  const dragTask = useTaskStore((state) => state.dragTask);
+
+  const removeTask = useTaskStore((state) => state.removeTask);
+
   return (
     <div
       className={cn(
-        `flex cursor-move items-start justify-between rounded-lg bg-white px-3 py-2 text-gray-900`
+        "flex cursor-move items-start justify-between rounded-lg bg-white px-3 py-2 text-gray-900",
+        {
+          "border-2 border-sky-500": status === "TODO",
+          "border-2 border-amber-500": status === "IN_PROGRESS",
+          "border-2 border-emerald-500": status === "DONE",
+        }
       )}
+      draggable
+      onDrag={() => dragTask(id)}
     >
       <div>
         <h3 className="font-medium text-gray-700">{title}</h3>
         <p className="text-sm font-light text-gray-500">{description}</p>
       </div>
 
-      <button className="cursor-pointer">
+      <button className="cursor-pointer" onClick={() => removeTask(id)}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
